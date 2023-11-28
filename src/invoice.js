@@ -1,4 +1,4 @@
-const agencies_data=require("./agencies_data.json")
+const agencies_data=require("../public/agencies_data.json")
 const { ToWords } = require("to-words");
 const express = require("express");
 const app = express();
