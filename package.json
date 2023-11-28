@@ -1,0 +1,18 @@
+{
+  "name": "invoice_maker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "invoice.js",
+  "scripts": {
+    "start": "node invoice.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "handlebars": "^4.7.8",
+    "puppeteer": "^21.5.2",
+    "to-words": "^3.6.1"
+  }
+}

@@ -1,0 +1,47 @@
+[
+    {   
+        "enterprise_name": "GANGA BHAVANI AGENCIES",
+        "gstin": "37BYQPD5016E1ZJ",
+        "address":"12/72/1 JANAPADU ROAD, PIDUGURALLA 522413 PIDUGURALLA PALNADU INDIA, Guntur, Andhra Pradesh, 522413",
+        "state":"Andhra Pradesh",
+        "pan_num":"",
+        "car_number":"AP39UA0920"
+
+    },
+    {
+        "enterprise_name": "Naga Rajeswari Devi Agencies",
+        "gstin": "37EMFPS6813AIZI",
+        "address":"FIRST FLOOR, DOOR NO 2-236, PATURU YADAVA BAZAR, NEAR CHENNAKESAVA SWAMI TEMPLE, Macherla",
+        "state":"Andhra Pradesh",
+        "pan_num":"EMFPS6813A"
+    },
+    {
+        "enterprise_name": "Sri Valli Enterprises",
+        "gstin": "36IUKPK3561A1ZN",
+        "address":"SHOP NO 1 H NO 6-126, MANJEERA ROAD SUBASH NAGAR, SHOP NO 1 H NO 6-126, MANJEERA ROAD SUBASH NAGAR, GANGARAM, CHANDANAGAR, Medak, Telangana, Hyderabad,500050",
+        "state":"Telangana",
+        "pan_num":"IUKPK3561A"
+    },
+    {
+        "enterprise_name": "Srinivasa Enterprises",
+        "gstin": "37CTLPP2589P1ZI",
+        "state":"Andhra Pradesh",
+        "address":"SHOP NO 3 of 3-138, GALEMMA BAZAR, VINUKONDA, Guntur, Andra Pradesh, Guntur, 522647",
+        "pan_num":"CTLPP2589P"
+    },
+    {
+        "enterprise_name": "TRIKOTESWARA ENTERPRISES",
+        "gstin": "37AHVPD7325B3ZA",
+        "state":"Andhra Pradesh",
+        "address":"3-205, Markapuram Road, Thimmayapalem Village, Opp. Vinukonda Cold Storage Ltd, Vinukonda, Palnadu,",
+        "pan_num":""
+    },
+    {
+        "enterprise_name": "ANUSHA ENTERPRISES",
+        "gstin": "37DGLPK3442J1Z3",
+        "state":"Andhra Pradesh",
+        "address":"D no: 9-33 Opp, Marketyard, Ongole road, Martur, 523301, Bapatla Dt AP",
+        "pan_num":""
+    }
+
+]
