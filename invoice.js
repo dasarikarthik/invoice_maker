@@ -10,7 +10,9 @@ const puppeteer = require("puppeteer");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const port = process.env.PORT || 3000;
 
+app.use(express.static(path.join(__dirname, 'public')));
 let page;
 const getPage = async () => {
   if (page) return page;
@@ -20,7 +22,7 @@ const getPage = async () => {
 };
 
 router.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname + "/invoice.html"));
+  res.sendFile(path.join(__dirname, 'public', 'invoice.html'));
 });
 router.post("/genrate_invoice", async function (req, res) {
   const data = req.body;
@@ -76,5 +78,11 @@ async function generate_pdf(data) {
   const pdfBase64 = pdfBuffer.toString("base64");
   return pdfBase64;
 }
+
+
+
 app.use("/", router);
-app.listen(process.env.port || 3000);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
