@@ -4,7 +4,7 @@
   "description": "",
   "main": "invoice.js",
   "scripts": {
-    "start": "node src/invoice.js",
+    "start": "node invoice.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
