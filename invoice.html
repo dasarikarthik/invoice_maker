@@ -6,12 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoice</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script  src="./invoice.js"></script>
+  <script>
+
+    $(window).on('load', function () {
+      var data = {
+        "templateData": {
+          "cssStyles": "",
+          "htmlTemplate": ""
+        },
+        "jsonData": {
+          "name": "karthik"
+        }
+      }
+      $.post("https://qkccxqcev8.execute-api.eu-north-1.amazonaws.com/prod/pdf", data, async function (data, status) {
+        await console.log(data);
+      });
+    })
+  </script>
 </head>
 
 <body style="margin: 5px;">
   <form id="invoice_form">
 
-    
+
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Create Tax invoice</h2>
@@ -22,7 +40,8 @@
       <div class="sm:col-span-3">
         <label for="from_enterprise" class="block text-sm font-medium leading-6 text-gray-900">From Enterprise:</label>
         <div class="mt-2">
-          <select id="from_enterprise" name="from_enterprise" autocomplete="from_enterprise" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+          <select id="from_enterprise" name="from_enterprise" autocomplete="from_enterprise"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
             <option value="0">Ganga Bhavani agencies</option>
             <option value="1">Naga Rajeswari Devi Agencies</option>
             <option value="2">Sri Valli Enterprises</option>
@@ -36,7 +55,8 @@
       <div class="sm:col-span-3">
         <label for="to_enterprise" class="block text-sm font-medium leading-6 text-gray-900">To Enterprise:</label>
         <div class="mt-2">
-          <select id="to_enterprise" name="to_enterprise" autocomplete="to_enterprise" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+          <select id="to_enterprise" name="to_enterprise" autocomplete="to_enterprise"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
             <option value="0">Ganga Bhavani agencies</option>
             <option value="1">Naga Rajeswari Devi Agencies</option>
             <option value="2">Sri Valli Enterprises</option>
@@ -133,24 +153,62 @@
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
         </div>
   </form>
-  <script>
-    $('form').submit(function (e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const formProps = Object.fromEntries(formData);
-      $.post("/genrate_invoice", formProps, function (data, status) {
-        var link = document.createElement("a");
-        link.setAttribute('download', name);
-        link.href = "data:application/pdf;base64,"+data;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      });
-
-    })
-
-  </script>
-
 </body>
+<script>
+
+$('form').submit(async function (e) {
+  e.preventDefault();
+  var agencies_data = "";
+  var htmlTemplate = "";
+  var cssStyles = "";
+
+  var jsonPromise = $.getJSON("agencies_data.json", function (data) {
+    agencies_data = data;
+  });
+
+  var htmlPromise = $.get("./public/invoice_template.html", function (data) {
+    htmlTemplate = data.toString();
+  });
+
+  var cssPromise = $.get("./public/invoice_template.css", function (data) {
+    cssStyles = data.toString();
+  });
+
+  $.when(jsonPromise, htmlPromise, cssPromise).done(function () {
+    const formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+    const data = formProps;
+    const total_cost = data.quantity * data.rate;
+    const tax = data.tax;
+    const tax_applied = (total_cost * tax) / 100;
+    const total_amount = Math.round((total_cost + tax_applied) * 100) / 100;
+    let words = convertNumberToWords(total_amount);
+    data["words"] = words;
+    data["total_amount"] = total_amount;
+    data["tax_applied"] = tax_applied;
+    data["total_cost"] = total_cost;
+    data["from_enterprise"] = agencies_data[data.from_enterprise];
+    data["to_enterprise"] = agencies_data[data.to_enterprise];
+
+    var templateData = {
+      htmlTemplate: htmlTemplate,
+      cssStyles: cssStyles,
+    };
+    var processed_data = {};
+    processed_data["templateData"] = templateData;
+    processed_data["jsonData"] = data;
+    $.post("https://qkccxqcev8.execute-api.eu-north-1.amazonaws.com/prod/pdf", processed_data, function (data, status) {
+      var link = document.createElement("a");
+      link.setAttribute('download', name);
+      link.href = "data:application/pdf;base64," + data;
+      console.log(link.href)
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  })
+});
+
+</script>
 
 </html>
